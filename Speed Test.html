@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+	<div style="display:grid;justify-content: center;text-align: center;">
+
+		<h4>
+			Check you typing speed
+		</h4>
+
+		<div>
+			<input name="level" type="radio" group="level" value="1" checked="checked" onclick="check()">
+			<label>Beginner</label>
+			<input name="level" type="radio" group="level" value="2" onclick="check()">
+			<label>Novice</label>
+			<input name="level" type="radio" group="level" value="3" onclick="check()">
+			<label>Expert</label>
+		</div>
+		<h4>Type the following text</h4>
+		<h4 id="sentence">My first sentence</h4>
+		<textarea id="test_text" cols="35" rows="3"></textarea>
+		<div>
+			<label id="time" for="start">Time : 0s</label>
+			<button id="start" onclick="start()">Start</button>
+			<button id="done" onclick="done()">Done</button>
+		</div>
+	</div>
+
+	<script>
+		var sentences = ["My first sentence", "My typing is becoming better", "I can type fast now. I waas very happy!"]
+		var time_ms = 0
+		var time_s = 0
+		var stopped = false;
+		var clicked = false;
+
+		function check() {
+			var value = document.querySelector("input[name=level]:checked").value
+			console.log(value);
+			var sentence = document.getElementById("sentence")
+			if (value == 1)
+				sentence.innerHTML = sentences[0]
+			if (value == 2)
+				sentence.innerHTML = sentences[1]
+			if (value == 3)
+				sentence.innerHTML = sentences[2]
+		}
+
+
+		function start() {
+			if (!clicked) {
+				clicked = true
+				var x = setInterval(() => {
+					if (!stopped) {
+						time_ms++
+						time_s = time_ms / 10
+						document.getElementById("time").innerHTML = "Time : " + time_s + "s";
+					} else {
+						time_ms = 0
+						time_s = 0
+						stopped = false
+						clearInterval(x)
+					}
+				}, 100);
+			}
+		}
+
+
+
+
+
+		function done() {
+			stopped = true
+			clicked = false
+			var message = ""
+			var value = document.querySelector("input[name=level]:checked").value
+			var text = document.getElementById("test_text").value
+			console.log(value)
+			switch (parseInt(value)) {
+				case 1:
+					if (text === sentences[0])
+						alert("Your typing was correct. You took " + time_s + " seconds ")
+					else
+						alert("Erro in Typing.... Try again")
+					console.log("h")
+					break
+				case 2:
+
+					if (text === sentences[1])
+						alert("Your typing was correct. You took " + time_s + " seconds ")
+					else
+						alert("Erro in Typing.... Try again")
+					break
+				case 3:
+
+					if (text === sentence[2])
+						alert("Your typing was correct. You took " + time_s + " seconds ")
+					else
+						alert("Erro in Typing.... Try again")
+					break
+			}
+
+
+		}
+	</script>
+
+</body>
+
+</html>
